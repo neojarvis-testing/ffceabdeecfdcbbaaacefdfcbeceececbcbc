@@ -1,6 +1,8 @@
 import unittest
 from unittest.mock import patch
-from hotel_functions import *
+import os
+import json
+from hotel_functions import load_hotels, save_hotels, add_hotel, delete_hotel
 
 class CustomTextTestResult(unittest.TextTestResult):
     def addSuccess(self, test):
@@ -71,8 +73,42 @@ class TestHotelFunctions(unittest.TestCase):
         hotel_deleted = {'name': "Metro", 'location': "Test Location", 'rating': 4.5}
         self.assertTrue(hotel_deleted not in updated_hotels)
 
+    # Additional test case for loading and saving hotels
+    def test_load_save_hotels(self):
+        # Test data
+        test_data = [
+            {'name': 'Hotel A', 'location': 'Location A', 'rating': 4.5},
+            {'name': 'Hotel B', 'location': 'Location B', 'rating': 3.8}
+        ]
 
- 
+        # Path to the test hotels.json file
+        filename = 'test_hotels.json'
+
+        # Write test data to hotels.json file
+        with open(filename, 'w') as file:
+            json.dump(test_data, file)
+
+        # Load hotels from the test JSON file
+        loaded_hotels = load_hotels(filename)
+
+        # Check if loaded data matches the test data
+        self.assertEqual(loaded_hotels, test_data)
+
+        # Additional hotel data to save
+        additional_hotel = {'name': 'Hotel C', 'location': 'Location C', 'rating': 4.2}
+
+        # Add additional hotel to the test data
+        test_data.append(additional_hotel)
+
+        # Save test data to hotels.json file
+        save_hotels(test_data, filename)
+
+        # Load the saved data from the file
+        with open(filename, 'r') as file:
+            saved_data = json.load(file)
+
+        # Check if the saved data matches the updated test data
+        self.assertEqual(saved_data, test_data)
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()

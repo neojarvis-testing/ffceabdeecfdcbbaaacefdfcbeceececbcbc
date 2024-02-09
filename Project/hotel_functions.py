@@ -24,7 +24,6 @@ def add_hotel(hotels):
     hotel = {'name': name, 'location': location, 'rating': rating}
     hotels.append(hotel)
 
-
 # Function to delete a hotel from the list
 def delete_hotel(hotels):
     name = input("Enter the name of the hotel to delete: ")
@@ -33,6 +32,7 @@ def delete_hotel(hotels):
             hotels.remove(hotel)
             return
     print(f"Hotel {name} not found.")
+
 
 # Function to update the rating of a hotel
 def update_rating(hotels):
