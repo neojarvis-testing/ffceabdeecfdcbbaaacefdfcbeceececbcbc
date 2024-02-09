@@ -102,28 +102,37 @@ class TestHotelFunctions(unittest.TestCase):
         # Search for hotels by criteria not in data
         search_results = search_hotels(hotels, 'Garden View')
         self.assertEqual(len(search_results), 0)
-        
+
     def test_view_hotels(self):
-            # Prepare test data
-            test_hotels = [
-                {'name': 'Metro Plaza', 'location': 'City Center', 'rating': 4.0},
-                {'name': 'Grand Hotel', 'location': 'Downtown', 'rating': 4.5},
-                {'name': 'Beach Resort', 'location': 'Beachfront', 'rating': 3.8}
-            ]
-            
-            # Call the view_hotels function and capture the output
-            with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
-                view_hotels(test_hotels)
-                output = mock_stdout.getvalue().strip()
+        FILENAME = 'hotels.json'
+        
+        # Prepare test data
+        test_hotels = [
+            {'name': 'Metro Plaza', 'location': 'City Center', 'rating': 4.0},
+            {'name': 'Grand Hotel', 'location': 'Downtown', 'rating': 4.5},
+            {'name': 'Beach Resort', 'location': 'Beachfront', 'rating': 3.8}
+        ]
+        
+        # Create a temporary file for testing
+        with open(FILENAME, 'w') as file:
+            json.dump(test_hotels, file)
+        
+        # Load existing hotels from JSON file
+        hotels = load_hotels(FILENAME)
+        
+        # Capture the printed output using patch
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            # Call the view_hotels function
+            view_hotels(hotels)
+            output = mock_stdout.getvalue().strip()
 
-            # Check if the output matches the expected format
-            expected_output = """All hotels:
-    Name: Metro Plaza, Location: City Center, Rating: 4.0
-    Name: Grand Hotel, Location: Downtown, Rating: 4.5
-    Name: Beach Resort, Location: Beachfront, Rating: 3.8"""
-            self.assertEqual(output, expected_output)
+        # Prepare the expected output
+        expected_output = "\n".join([f"Name: {hotel['name']}, Location: {hotel['location']}, Rating: {hotel['rating']}" for hotel in test_hotels])
+        
+        # Assert whether the printed output matches the expected output
+        self.assertEqual(output, expected_output)
 
- 
+    
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()
