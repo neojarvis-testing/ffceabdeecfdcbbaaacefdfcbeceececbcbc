@@ -121,6 +121,8 @@ class TestHotelFunctions(unittest.TestCase):
         self.assertEqual(len(search_results), 0)
 
 
+    
+ 
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()
