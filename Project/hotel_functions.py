@@ -44,6 +44,8 @@ def update_rating(hotels):
             print(f"Rating for {name} updated successfully!")
             return
     print(f"Hotel {name} not found.")
+
+    
 # Function to view all hotels
 def view_hotels(hotels):
     print("All hotels:")
