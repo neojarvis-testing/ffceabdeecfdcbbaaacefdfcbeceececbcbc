@@ -9,9 +9,9 @@ def load_hotels(filename):
         return []
 
 # Function to save hotel data to a JSON file
-def save_hotels(hot, filename):
+def save_hotels(hotels, filename):
     with open(filename, 'w') as file:
-        json.dump(hot, file, indent=4)
+        json.dump(hotels, file, indent=4)
 
 # Function to add a hotel to the list
 
