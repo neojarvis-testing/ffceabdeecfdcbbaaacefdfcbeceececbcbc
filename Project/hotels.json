@@ -1,7 +1,1 @@
-[
-    {
-        "name": "GRT",
-        "location": "Salem",
-        "rating": 4.0
-    }
-]
+[{"name": "Metro Plaza", "location": "City Center", "rating": 4.0}, {"name": "Grand Hotel", "location": "Downtown", "rating": 4.5}, {"name": "Beach Resort", "location": "Beachfront", "rating": 3.8}]
