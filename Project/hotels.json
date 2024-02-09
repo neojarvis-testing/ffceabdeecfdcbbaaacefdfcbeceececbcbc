@@ -1,12 +1,7 @@
 [
     {
-        "name": "Hotel A",
-        "location": "Location A",
-        "rating": 4.5
-    },
-    {
-        "name": "Hotel B",
-        "location": "Location B",
-        "rating": 3.8
+        "name": "GRT",
+        "location": "Salem",
+        "rating": 4.0
     }
 ]

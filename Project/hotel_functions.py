@@ -50,3 +50,12 @@ def view_hotels(hotels):
     for hotel in hotels:
         print(f"Name: {hotel['name']}, Location: {hotel['location']}, Rating: {hotel['rating']}")
 
+# Function to search for hotels based on criteria
+def search_hotels(hotels, criteria):
+    results = []
+    for hotel in hotels:
+        if criteria.lower() in hotel['name'].lower() or criteria.lower() in hotel['location'].lower():
+            results.append(hotel)
+    return results
+
+

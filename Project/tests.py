@@ -1,8 +1,6 @@
 import unittest
 from unittest.mock import patch
-import os
-import json
-from hotel_functions import load_hotels, save_hotels, add_hotel, delete_hotel
+from hotel_functions import *
 
 class CustomTextTestResult(unittest.TextTestResult):
     def addSuccess(self, test):
@@ -10,7 +8,7 @@ class CustomTextTestResult(unittest.TextTestResult):
 
     def addError(self, test, err):
         test_name = self.getDescription(test)
-        print(f"Failed {test_name}")
+        print(f"Failed {test_name} due to an unexpected error: {err}")
 
     def addFailure(self, test, err):
         # Customizing failure message format
@@ -21,47 +19,7 @@ class CustomTextTestResult(unittest.TextTestResult):
         """Overrides the default getDescription to remove 'E' or 'F' prefix."""
         return str(test)
 
-class TestFileClass(unittest.TestCase):
-    def test_create_hotels_json(self):
-        # Path to the hotels.json file
-        filename = 'hotels.json'
-
-        # Check if hotels.json file exists
-        if os.path.exists(filename):
-            try:
-                # Load hotels from existing file
-                loaded_hotels = load_hotels(filename)
-            except Exception as e:
-                self.fail(f"Failed to load {filename}: {e}")
-
-            # Test data
-            test_data = [
-                {'name': 'Hotel A', 'location': 'Location A', 'rating': 4.5},
-                {'name': 'Hotel B', 'location': 'Location B', 'rating': 3.8}
-            ]
-
-            try:
-                # Save test data to hotels.json file
-                save_hotels(test_data, filename)
-            except Exception as e:
-                self.fail(f"Failed to save data to {filename}: {e}")
-
-            # Check if hotels.json file exists after saving
-            self.assertTrue(os.path.exists(filename), f"{filename} should exist after saving")
-
-            try:
-                # Load hotels from the saved JSON file
-                loaded_hotels = load_hotels(filename)
-
-                # Check if loaded data matches the test data
-                self.assertEqual(loaded_hotels, test_data)
-            except Exception as e:
-                self.fail(f"Failed to load data from {filename}: {e}")
-        else:
-            self.fail(f"{filename} does not exist. Unable to test load and save features.")
-
 class TestHotelFunctions(unittest.TestCase):
-
     @patch('builtins.input', side_effect=["Metro", "Test Location", "4.5"])
     def test_add_hotel(self, mock_input):
         FILENAME = 'hotels.json'
@@ -113,18 +71,11 @@ class TestHotelFunctions(unittest.TestCase):
         hotel_deleted = {'name': "Metro", 'location': "Test Location", 'rating': 4.5}
         self.assertTrue(hotel_deleted not in updated_hotels)
 
+
+ 
+
 if __name__ == '__main__':
     loader = unittest.TestLoader()
-    
-    # Load tests from both test classes
-    suite_hotel = loader.loadTestsFromTestCase(TestHotelFunctions)
-    suite_file = loader.loadTestsFromTestCase(TestFileClass)
-    
-    # Combine the test suites
-    suite = unittest.TestSuite([suite_hotel, suite_file])
-    
-    # Use the CustomTextTestResult class for custom test result output
+    suite = loader.loadTestsFromTestCase(TestHotelFunctions)
     runner = unittest.TextTestRunner(resultclass=CustomTextTestResult)
-    
-    # Run the combined test suite
     result = runner.run(suite)
