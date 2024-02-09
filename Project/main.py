@@ -2,7 +2,7 @@ import os
 from hotel_functions import load_hotels, save_hotels, add_hotel, delete_hotel, update_rating, view_hotels
 
 # Define the filename for storing hotel data
-FILENAME = 'hot.json'
+FILENAME = 'hotels.json'
 
 # Main function
 def main():
