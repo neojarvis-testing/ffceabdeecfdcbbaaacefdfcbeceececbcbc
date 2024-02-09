@@ -74,41 +74,38 @@ class TestHotelFunctions(unittest.TestCase):
         self.assertTrue(hotel_deleted not in updated_hotels)
 
     # Additional test case for loading and saving hotels
-    def test_load_save_hotels(self):
+
+    def test_create_hotels_json(self):
+        # Path to the hotels.json file
+        filename = 'hotels.json'
+
+        # Check if hotels.json file exists
+        self.assertFalse(os.path.exists(filename), f"{filename} should not exist before the test")
+
+        # Load hotels from non-existing file
+        loaded_hotels = load_hotels(filename)
+
+        # Check if loaded data is an empty list
+        self.assertEqual(loaded_hotels, [])
+
         # Test data
         test_data = [
             {'name': 'Hotel A', 'location': 'Location A', 'rating': 4.5},
             {'name': 'Hotel B', 'location': 'Location B', 'rating': 3.8}
         ]
 
-        # Path to the test hotels.json file
-        filename = 'test_hotels.json'
+        # Save test data to hotels.json file
+        save_hotels(test_data, filename)
 
-        # Write test data to hotels.json file
-        with open(filename, 'w') as file:
-            json.dump(test_data, file)
+        # Check if hotels.json file exists after saving
+        self.assertTrue(os.path.exists(filename), f"{filename} should exist after saving")
 
-        # Load hotels from the test JSON file
+        # Load hotels from the saved JSON file
         loaded_hotels = load_hotels(filename)
 
         # Check if loaded data matches the test data
         self.assertEqual(loaded_hotels, test_data)
 
-        # Additional hotel data to save
-        additional_hotel = {'name': 'Hotel C', 'location': 'Location C', 'rating': 4.2}
-
-        # Add additional hotel to the test data
-        test_data.append(additional_hotel)
-
-        # Save test data to hotels.json file
-        save_hotels(test_data, filename)
-
-        # Load the saved data from the file
-        with open(filename, 'r') as file:
-            saved_data = json.load(file)
-
-        # Check if the saved data matches the updated test data
-        self.assertEqual(saved_data, test_data)
 
 if __name__ == '__main__':
     loader = unittest.TestLoader()
