@@ -13,16 +13,15 @@ def save_hotels(hotels, filename):
     with open(filename, 'w') as file:
         json.dump(hotels, file, indent=4)
 
+
 # Function to add a hotel to the list
-
-
-# Modify the add_hotel function in hotel_functions.py
 def add_hotel(hotels):
     name = input("Enter the hotel name: ")
     location = input("Enter the hotel location: ")
     rating = float(input("Enter the hotel rating (out of 5): "))
     hotel = {'name': name, 'location': location, 'rating': rating}
     hotels.append(hotel)
+
 
 # Function to delete a hotel from the list
 def delete_hotel(hotels):
@@ -45,12 +44,13 @@ def update_rating(hotels):
             return
     print(f"Hotel {name} not found.")
 
-    
+
 # Function to view all hotels
 def view_hotels(hotels):
     print("All hotels:")
     for hotel in hotels:
         print(f"Name: {hotel['name']}, Location: {hotel['location']}, Rating: {hotel['rating']}")
+
 
 # Function to search for hotels based on criteria
 def search_hotels(hotels, criteria):
